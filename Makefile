@@ -1,4 +1,4 @@
 all: vimrc
 
 vimrc:
-	ln -s .vimrc ~/.vimrc
+	ln -s ${CURDIR}/.vimrc ~/.vimrc
