@@ -1,6 +1,7 @@
 "-if/while/for for c++
 autocmd FileType c,cpp,h,hpp noremap rif iif ()<Enter>{<Enter>}<Esc>2k=2j$i
 autocmd FileType c,cpp,h,hpp noremap rwhile iwhile ()<Enter>{<Enter>}<Esc>2k=2j$i
+"- this guy makes for templates from a to z
 for i in split('abcdefghijklmnopqrstuvwxyz', '\zs')
     execute printf("autocmd FileType c,cpp,h,hpp noremap rfor%s i for (int %s = 0; %s < ; %s++)<Enter>{<Enter>}<Esc>2k=2j$5hi", i, i, i, i)
 endfor
@@ -12,19 +13,9 @@ inoremap { {<Enter>}<Esc>k$i<Right>
 inoremap " ""<Left>
 inoremap ' ''<Left>
 inoremap [ []<Left>
-"-inoremap <expr> <Esc>; SemicolHandler()
-inoremap <Esc>; <End>;
-inoremap <Esc>= <Esc>==a
+nnoremap ; A;<Esc>
 
-func SemicolHandler()
-  if (col("." >= col("$")-1)) && getline(".")[col(".")-1] != ';'
-    return ;
-  else
-    return <End>;
-  endif
-endfunc
 
-nnoremap <Enter> $a<Enter><ESC>
 
 
 "-wrap selection in quotes, parenthesis, or {} brackets w/ indent
@@ -32,6 +23,8 @@ vnoremap ( <ESC>`>a)<ESC>`<i(<ESC>
 vnoremap " <ESC>`>a"<ESC>`<i"<ESC>
 vnoremap { <ESC>`>a<Enter>}<ESC>`<i{<Enter><ESC>`<=i{
 
+" Make the dot command work as expected in visual mode
+vnoremap . :norm.<CR>")"
 
 filetype indent plugin on
 
