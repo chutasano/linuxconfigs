@@ -16,8 +16,6 @@ autocmd FileType c,cpp,h,hpp inoremap [ []<Left>
 autocmd FileType c,cpp,h,hpp nnoremap ; A;<Esc>
 
 
-
-
 "-wrap selection in quotes, parenthesis, or {} brackets w/ indent
 vnoremap ( <ESC>`>a)<ESC>`<i(<ESC>
 vnoremap " <ESC>`>a"<ESC>`<i"<ESC>
@@ -31,6 +29,7 @@ filetype indent plugin on
 syntax on
 
 set mouse=a
+set title
 
 "-Indent
 set shiftwidth=2
