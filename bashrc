@@ -14,3 +14,7 @@ alias gitp='git add -A; git commit -m "auto pushed by gitp"; git push'
 function c {
   builtin cd "$@" && ls -F
 }
+
+#usage: tmux<n/a> <sessionname>
+alias tmuxn='tmux new-session -s '
+alias tmuxa='tmux attach-session -t '
