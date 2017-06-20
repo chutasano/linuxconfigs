@@ -45,6 +45,9 @@ set smartcase
 set hlsearch
 nnoremap <C-L> :nohl<CR><C-L>
 
+"-Paste mode (doesn't mess with indentation and mappings within copy paste)
+set pastetoggle=<F2>
+
 "-Center screen
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
