@@ -1,3 +1,8 @@
+try
+  source ~/linuxconfigs/svimrc
+catch
+endtry
+
 "-if/while/for for c++
 autocmd FileType c,cpp,h,hpp noremap rif iif ()<Enter>{<Enter>}<Esc>2k=2j$i
 autocmd FileType c,cpp,h,hpp noremap rwhile iwhile ()<Enter>{<Enter>}<Esc>2k=2j$i
