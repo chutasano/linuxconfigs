@@ -33,11 +33,11 @@ filetype indent plugin on
 
 syntax on
 
-set mouse=a
+set mouse=nv
 set title
 
 "-Indent
-set shiftwidth=2
+set shiftwidth=4
 set autoindent
 
 "-Key changes
