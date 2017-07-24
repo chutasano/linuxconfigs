@@ -1,5 +1,5 @@
 try
-  source ~/linuxconfigs/svimrc
+    source ~/linuxconfigs/svimrc
 catch
 endtry
 
@@ -70,3 +70,13 @@ nnoremap gj :m .+1<CR>==
 nnoremap gk :m .-2<CR>==
 vnoremap gj :m '>+1<CR>gv=gv
 vnoremap gk :m '<-2<CR>gv=gv
+
+function! s:DiffWithSaved()
+    let filetype=&ft
+    diffthis
+    vnew | r # | normal! 1Gdd
+    diffthis
+    exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! Diff call s:DiffWithSaved()
+
