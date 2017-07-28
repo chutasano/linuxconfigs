@@ -8,7 +8,7 @@ alias copy='xclip -selection clipboard' # copies to clipboard
 alias gits='git status' # git status
 
 #usage: gitp  (note: I only use this when I'm just using git as a form of dropbox)
-alias gitp='git add -A; git commit -m "auto pushed by gitp"; git push'
+alias gitp='git add -u; git commit -m "auto pushed by gitp"; git push'
 
 #usage: c <dir>
 function c {
@@ -18,5 +18,6 @@ function c {
 #usage: tmux<n/a> <sessionname>
 alias tmuxn='tmux new-session -s '
 alias tmuxa='tmux attach-session -t '
-+#usage: rl (reloads bash)
-+alias rl='exec bash -l'
+
+#usage: rl (reloads bash)
+alias rl='exec bash -l'
