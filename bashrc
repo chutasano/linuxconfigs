@@ -18,3 +18,5 @@ function c {
 #usage: tmux<n/a> <sessionname>
 alias tmuxn='tmux new-session -s '
 alias tmuxa='tmux attach-session -t '
++#usage: rl (reloads bash)
++alias rl='exec bash -l'
