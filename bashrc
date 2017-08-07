@@ -29,28 +29,43 @@ function gits {
     m=$(echo "$gitsall" | grep "^ M")
     d=$(echo "$gitsall" | grep "^ D")
     u=$(echo "$gitsall" | grep "^??")
+    a=$(echo "$gitsall" | grep "^A ")
+    s=$(echo "$gitsall" | grep "^M ")
     #i=0
     #while [[ -n "$(echo {m,d,u}$(($i)))" ]]; do
 #	i=$(($i+1))
 #	unset {m,d,u}$(($i))
 #    done
-    count=0
-    while read -r a; do
-	a=${a:2}
-	export m$(($count))="$(pwd)/$a"
+    count=1
+    while read -r tmpfilename; do
+	tmpfilename=${tmpfilename:2}
+	set m$(($count))="$(pwd)/$tmpfilename"
 	count=$(($count+1))
     done <<< "$m"
-    count=0
-    while read -r a; do
-	a=${a:2}
-	export d$(($count))="$(pwd)/$a"
+    count=1
+    while read -r tmpfilename; do
+	tmpfilename=${tmpfilename:2}
+	set d$(($count))="$(pwd)/$tmpfilename"
 	count=$(($count+1))
     done <<< "$d"
-    count=0
-    while read -r a; do
-	a=${a:2}
-	export u$(($count))="$(pwd)/$a"
+    count=1
+    while read -r tmpfilename; do
+	tmpfilename=${tmpfilename:3}
+	set u$(($count))="$(pwd)/$tmpfilename"
 	count=$(($count+1))
     done <<< "$u"
-    unset m d u gitsall
+    count=1
+    while read -r tmpfilename; do
+	tmpfilename=${tmpfilename:3}
+	set a$(($count))="$(pwd)/$tmpfilename"
+	count=$(($count+1))
+    done <<< "$a"
+    count=1
+    while read -r tmpfilename; do
+	tmpfilename=${tmpfilename:3}
+	set s$(($count))="$(pwd)/$tmpfilename"
+	count=$(($count+1))
+    done <<< "$s"
+
+    unset m d u a s tmpfilename gitsall
 }
