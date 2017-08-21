@@ -23,49 +23,26 @@ alias tmuxa='tmux attach-session -t '
 alias rl='exec bash -l'
 
 #usage gits: sets env variables $m<n> $d<n> $u<n> (modified, deleted, untracked)
+#credits: https://codereview.stackexchange.com/questions/172324/bash-script-for-referencing-git-status-output-files/173400#173400
 function gits {
     git status
-    gitsall=$(git status -s)
-    m=$(echo "$gitsall" | grep "^ M")
-    d=$(echo "$gitsall" | grep "^ D")
-    u=$(echo "$gitsall" | grep "^??")
-    a=$(echo "$gitsall" | grep "^A ")
-    s=$(echo "$gitsall" | grep "^M ")
-    #i=0
-    #while [[ -n "$(echo {m,d,u}$(($i)))" ]]; do
-#	i=$(($i+1))
-#	unset {m,d,u}$(($i))
-#    done
-    count=1
-    while read -r tmpfilename; do
-	tmpfilename=${tmpfilename:2}
-	set m$(($count))="$(pwd)/$tmpfilename"
-	count=$(($count+1))
-    done <<< "$m"
-    count=1
-    while read -r tmpfilename; do
-	tmpfilename=${tmpfilename:2}
-	set d$(($count))="$(pwd)/$tmpfilename"
-	count=$(($count+1))
-    done <<< "$d"
-    count=1
-    while read -r tmpfilename; do
-	tmpfilename=${tmpfilename:3}
-	set u$(($count))="$(pwd)/$tmpfilename"
-	count=$(($count+1))
-    done <<< "$u"
-    count=1
-    while read -r tmpfilename; do
-	tmpfilename=${tmpfilename:3}
-	set a$(($count))="$(pwd)/$tmpfilename"
-	count=$(($count+1))
-    done <<< "$a"
-    count=1
-    while read -r tmpfilename; do
-	tmpfilename=${tmpfilename:3}
-	set s$(($count))="$(pwd)/$tmpfilename"
-	count=$(($count+1))
-    done <<< "$s"
-
-    unset m d u a s tmpfilename gitsall
+    mc=1 dc=1 uc=1 ac=1 sc=1
+    local line status path name
+    while read -r line; do
+        if [ "${line}" = "" ]
+        then
+            continue
+        fi
+        status=${line:0:2}
+        path=${line:3}
+        case "$status" in
+            " M") name=m$((mc++)) ;;
+            " D") name=d$((dc++)) ;;
+            "??") name=u$((uc++)) ;;
+            "A ") name=a$((ac++)) ;;
+            "M ") name=s$((sc++)) ;;
+            *) echo unsupported status on line: $line
+        esac
+        printf -v $name "$path"
+    done <<< "$(git status -s)"
 }

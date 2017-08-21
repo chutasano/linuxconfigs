@@ -33,12 +33,13 @@ filetype indent plugin on
 
 syntax on
 
-set mouse=nv
+set mouse=n
 set title
 
 "-Indent
 set shiftwidth=4
 set autoindent
+set expandtab
 
 "-Key changes
 set backspace=indent,eol,start
