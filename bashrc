@@ -29,10 +29,7 @@ function gits {
     mc=1 dc=1 uc=1 ac=1 sc=1
     local line status path name
     while read -r line; do
-        if [ "${line}" = "" ]
-        then
-            continue
-        fi
+        [ "${line}" ] || continue
         status=${line:0:2}
         path=${line:3}
         case "$status" in
