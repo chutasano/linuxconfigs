@@ -1,4 +1,4 @@
-all: vimrc ackrc bashrc tmuxconf deps
+all: vimrc ackrc bashrc tmuxconf gitconfig deps
 
 vimrc:
 	ln -sf ${CURDIR}/vimrc ~/.vimrc
