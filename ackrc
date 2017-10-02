@@ -1,3 +1,4 @@
 --type-set=cpp=.c,.h,.cpp,.hpp
 --type-set=py=.py
+--type-set=hpp=.h,.hpp
 ##--pager=less -r

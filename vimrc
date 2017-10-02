@@ -1,30 +1,49 @@
+call plug#begin('~/.vim/vplugindir')
+Plug 'xuhdev/SingleCompile'
+call plug#end()
+" May need to
+"   filetype off
+"   syntax off
+
+" For SingleCompile plugin
+nmap <F9> :SCCompile<cr>
+nmap <F10> :SCCompileRun<cr>
+
 try
     source ~/linuxconfigs/svimrc
 catch
 endtry
 
-"-if/while/for for c++
-autocmd FileType c,cpp,h,hpp noremap rif iif ()<Enter>{<Enter>}<Esc>2k=2j$i
-autocmd FileType c,cpp,h,hpp noremap rwhile iwhile ()<Enter>{<Enter>}<Esc>2k=2j$i
-"- this guy makes for templates from a to z
-for i in split('abcdefghijklmnopqrstuvwxyz', '\zs')
-    execute printf("autocmd FileType c,cpp,h,hpp noremap rfor%s i for (int %s = 0; %s < ; %s++)<Enter>{<Enter>}<Esc>2k=2j$5hi", i, i, i, i)
-endfor
-autocmd FileType c,cpp,h,hpp noremap rFor i for ()<Enter>{<Enter>}<Esc>2k=2j$i
+autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
+autocmd FileType c,cpp,h,hpp call SetCppOptions()
 
-"-auto closing for most languages (not <> because << and >> )
-autocmd FileType c,cpp,h,hpp inoremap ( ()<Left>
-autocmd FileType c,cpp,h,hpp inoremap { {<Enter>}<Esc>k$i<Right>
-autocmd FileType c,cpp,h,hpp inoremap " ""<Left>
-autocmd FileType c,cpp,h,hpp inoremap ' ''<Left>
-autocmd FileType c,cpp,h,hpp inoremap [ []<Left>
-autocmd FileType c,cpp,h,hpp nnoremap ; A;<Esc>
+function SetCppOptions()
+    "-if/while/for for c++
+    noremap rif iif ()<Enter>{<Enter>}<Esc>2k=2j$i
+    noremap rwhile iwhile ()<Enter>{<Enter>}<Esc>2k=2j$i
+    "- this guy makes for templates from a to z
+    for i in split('abcdefghijklmnopqrstuvwxyz', '\zs')
+        execute printf("noremap rfor%s i for (int %s = 0; %s < ; %s++)<Enter>{<Enter>}<Esc>2k=2j$5hi", i, i, i, i)
+    endfor
+    noremap rFor i for ()<Enter>{<Enter>}<Esc>2k=2j$i
+    nnoremap ; A;<Esc>
+endfunction
+
+function SetMostOptions()
+    "-auto closing for most languages (not <> because << and >> )
+    inoremap ( ()<Left>
+    inoremap { {<Enter>}<Esc>k$i<Right>
+    inoremap " ""<Left>
+    inoremap ' ''<Left>
+    inoremap [ []<Left>
 
 
-"-wrap selection in quotes, parenthesis, or {} brackets w/ indent
-vnoremap ( <ESC>`>a)<ESC>`<i(<ESC>
-vnoremap " <ESC>`>a"<ESC>`<i"<ESC>
-vnoremap { <ESC>`>a<Enter>}<ESC>`<i{<Enter><ESC>`<=i{
+    "-wrap selection in quotes, parenthesis, or {} brackets w/ indent
+    vnoremap ( <ESC>`>a)<ESC>`<i(<ESC>
+    vnoremap " <ESC>`>a"<ESC>`<i"<ESC>
+    vnoremap { <ESC>`>a<Enter>}<ESC>`<i{<Enter><ESC>`<=i{
+endfunction
+
 
 " Make the dot command work as expected in visual mode
 vnoremap . :norm.<CR>")"
@@ -38,7 +57,7 @@ set title
 
 "-Indent
 set shiftwidth=4
-set autoindent
+set smartindent
 set expandtab
 
 "-Key changes
