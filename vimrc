@@ -25,8 +25,10 @@ function SetCppOptions()
     for i in split('abcdefghijklmnopqrstuvwxyz', '\zs')
         execute printf("noremap rfor%s i for (int %s = 0; %s < ; %s++)<Enter>{<Enter>}<Esc>2k=2j$5hi", i, i, i, i)
     endfor
-    noremap rFor i for ()<Enter>{<Enter>}<Esc>2k=2j$i
+    nnoremap rFor i for ()<Enter>{<Enter>}<Esc>2k=2j$i
     nnoremap ; A;<Esc>
+    nnoremap #i< i#include <><Esc>hi
+    nnoremap #i" i#include ""<Esc>hi
 endfunction
 
 function SetMostOptions()

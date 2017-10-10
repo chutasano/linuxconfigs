@@ -11,4 +11,4 @@ ln -sf ${THISPATH}/ackrc ~/.ackrc
 ln -sf ${THISPATH}/tmux.conf ~/.tmux.conf
 git config --global include.path ${THISPATH}/gitconfig
 
-grep -qF 'source ${THISPATH}/bashrc' ~/.bashrc || echo 'source ${THISPATH}/bashrc' >> ~/.bashrc
+grep -qF 'source '"${THISPATH}"'/bashrc' ~/.bashrc || echo 'source '"${THISPATH}"'/bashrc' >> ~/.bashrc
