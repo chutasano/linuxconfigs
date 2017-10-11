@@ -1,13 +1,28 @@
+function! SyntasticSetupf(info)
+  autocmd! User syntastic set statusline+=%#warningmsg#
+  autocmd! User syntastic set statusline+=%{SyntasticStatuslineFlag()}
+  autocmd! User syntastic set statusline+=%*
+  autocmd! User syntastic let g:syntastic_always_populate_loc_list = 1
+  autocmd! User syntastic let g:syntastic_auto_loc_list = 1
+  autocmd! User syntastic let g:syntastic_check_on_open = 1
+  autocmd! User syntastic let g:syntastic_check_on_wq = 0
+endfunction
+
+
+
 call plug#begin('~/.vim/vplugindir')
+" Compile source files on the fly
 Plug 'xuhdev/SingleCompile'
+nmap <F9> :SCCompile<cr>
+nmap <F10> :SCCompileRun<cr>
+
+" Syntax checker
+Plug 'vim-syntastic/syntastic', { 'on': 'LoadSyntastic', 'do': function('SyntasticSetupf') }
+
 call plug#end()
 " May need to
 "   filetype off
 "   syntax off
-
-" For SingleCompile plugin
-nmap <F9> :SCCompile<cr>
-nmap <F10> :SCCompileRun<cr>
 
 try
     source ~/linuxconfigs/svimrc
