@@ -31,7 +31,7 @@ function gits {
     while read -r line; do
         [ "${line}" ] || continue
         status=${line:0:2}
-        path=${line:3}
+        path=${line:2}
         case "$status" in
             " M") name=m$((mc++)) ;;
             " D") name=d$((dc++)) ;;
