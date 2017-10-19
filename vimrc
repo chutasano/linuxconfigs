@@ -27,8 +27,8 @@ function SetCppOptions()
     endfor
     nnoremap rFor i for ()<Enter>{<Enter>}<Esc>2k=2j$i
     nnoremap ; A;<Esc>
-    nnoremap #i< i#include <><Esc>hi
-    nnoremap #i" i#include ""<Esc>hi
+    nnoremap #i< i#include <><Esc>i
+    nnoremap #i" i#include ""<Esc>i
 endfunction
 
 function SetMostOptions()
@@ -58,8 +58,8 @@ set mouse=n
 set title
 
 "-Indent
-set shiftwidth=4
 set smartindent
+set shiftwidth=4
 set expandtab
 
 "-Key changes
