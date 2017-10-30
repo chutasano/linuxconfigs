@@ -10,6 +10,9 @@ alias gitp='git add -u; git commit -m "auto pushed by gitp"; git push'
 #usage: gitd (diff between HEAD and most recent ancestor to master)
 alias gitd='git diff $(git merge-base -a HEAD master)'
 
+#usage: lsd (displays folders)
+alias lsd='ls -d */'
+
 #usage: c <dir>
 function c {
   builtin cd "$@" && ls -F
