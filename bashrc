@@ -13,6 +13,9 @@ alias gitd='git diff $(git merge-base -a HEAD master)'
 #usage: lsd (displays folders)
 alias lsd='ls -d */'
 
+#usage: lsx (ls with sort by extension)
+alias lx='ls -X'
+
 #usage: c <dir>
 function c {
   builtin cd "$@" && ls -F
