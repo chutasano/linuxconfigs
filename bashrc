@@ -15,6 +15,9 @@ alias lsd='ls -d */'
 
 alias u='sudo apt update && sudo apt upgrade'
 
+#usage: lsx (ls with sort by extension)
+alias lx='ls -X'
+
 #usage: c <dir>
 function c {
   builtin cd "$@" && ls -F
@@ -48,3 +51,24 @@ function gits {
         printf -v $name "$path"
     done <<< "$(git status -s)"
 }
+
+# usage gitb: shows git branch sorted by last commit date
+alias gitb='for k in `git branch|sed s/^..//`;do echo -e `git log -1 --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" "$k" --`\\t"$k";done|sort -r'
+
+
+# sets up name + email on repo
+function gituml {
+    git config user.name "Chuta Sano"
+    git config user.email "chuta_sano@student.uml.edu"
+}
+
+function gitself {
+    git config user.name "Chuta Sano"
+    git config user.email "chuta_japan@comcast.net"
+}
+
+function gitirbt {
+    git config user.name "Chuta Sano"
+    git config user.email "csano@irobot.com"
+}
+
