@@ -13,6 +13,8 @@ alias gitd='git diff $(git merge-base -a HEAD master)'
 #usage: lsd (displays folders)
 alias lsd='ls -d */'
 
+alias u='sudo apt update && sudo apt upgrade'
+
 #usage: c <dir>
 function c {
   builtin cd "$@" && ls -F
