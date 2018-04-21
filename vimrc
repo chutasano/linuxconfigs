@@ -1,12 +1,3 @@
-function! SyntasticSetupf(info)
-  autocmd! User syntastic set statusline+=%#warningmsg#
-  autocmd! User syntastic set statusline+=%{SyntasticStatuslineFlag()}
-  autocmd! User syntastic set statusline+=%*
-  autocmd! User syntastic let g:syntastic_always_populate_loc_list = 1
-  autocmd! User syntastic let g:syntastic_auto_loc_list = 1
-  autocmd! User syntastic let g:syntastic_check_on_open = 1
-  autocmd! User syntastic let g:syntastic_check_on_wq = 0
-endfunction
 
 
 
@@ -16,8 +7,7 @@ Plug 'xuhdev/SingleCompile'
 nmap <F9> :SCCompile<cr>
 nmap <F10> :SCCompileRun<cr>
 
-" Syntax checker
-Plug 'vim-syntastic/syntastic', { 'on': 'LoadSyntastic', 'do': function('SyntasticSetupf') }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
 call plug#end()
 " May need to
@@ -36,23 +26,28 @@ function SetCppOptions()
     "-if/while/for for c++
     noremap rif iif ()<Enter>{<Enter>}<Esc>2k=2j$i
     noremap rwhile iwhile ()<Enter>{<Enter>}<Esc>2k=2j$i
-    "- this guy makes for templates from a to z
-    for i in split('abcdefghijklmnopqrstuvwxyz', '\zs')
+    "- this guy makes for for ijk
+    for i in split('ijk', '\zs')
         execute printf("noremap rfor%s i for (int %s = 0; %s < ; %s++)<Enter>{<Enter>}<Esc>2k=2j$5hi", i, i, i, i)
     endfor
-    nnoremap rFor i for ()<Enter>{<Enter>}<Esc>2k=2j$i
+    "- general for
+    nnoremap rforg i for ()<Enter>{<Enter>}<Esc>2k=2j$i
     nnoremap ; A;<Esc>
     nnoremap #i< i#include <><Esc>i
     nnoremap #i" i#include ""<Esc>i
+
+    "- cindent overrides smartindent
+    set cindent
+    set cinoptions=(:N0,g0,0,u0,U0,w1
 endfunction
 
 function SetMostOptions()
     "-auto closing for most languages (not <> because << and >> )
-    inoremap ( ()<Left>
-    inoremap { {<Enter>}<Esc>k$i<Right>
-    inoremap " ""<Left>
-    inoremap ' ''<Left>
-    inoremap [ []<Left>
+    inoremap () ()<Left>
+    inoremap {} {<Enter>}<Esc>k$i<Right>
+    inoremap "" ""<Left>
+    inoremap '' ''<Left>
+    inoremap [] []<Left>
 
 
     "-wrap selection in quotes, parenthesis, or {} brackets w/ indent
@@ -73,6 +68,7 @@ set mouse=n
 set title
 
 "-Indent
+set autoindent
 set smartindent
 set shiftwidth=4
 set expandtab
