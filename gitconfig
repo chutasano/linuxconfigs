@@ -1,4 +1,5 @@
 [alias]
+    co = "checkout"
     confs = "diff --name-only --diff-filter=U"
     hash = "log --pretty=format:'%h' -n 1"
     anc1 = "merge-base -a HEAD master"
