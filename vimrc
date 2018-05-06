@@ -1,6 +1,3 @@
-
-
-
 call plug#begin('~/.vim/vplugindir')
 " Compile source files on the fly
 Plug 'xuhdev/SingleCompile'
@@ -8,6 +5,8 @@ nmap <F9> :SCCompile<cr>
 nmap <F10> :SCCompileRun<cr>
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+Plug 'tpope/vim-obsession'
 
 call plug#end()
 " May need to
@@ -60,7 +59,7 @@ endfunction
 " Make the dot command work as expected in visual mode
 vnoremap . :norm.<CR>")"
 
-filetype indent plugin on
+filetype plugin on
 
 syntax on
 
@@ -116,6 +115,8 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
+"- gf on new tab
+nnoremap gf <C-w>gf
 
 function! s:DiffWithSaved()
     let filetype=&ft
