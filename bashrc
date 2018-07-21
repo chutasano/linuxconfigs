@@ -27,6 +27,9 @@ function c {
 alias tmuxn='tmux new-session -s '
 alias tmuxa='tmux attach-session -t '
 
+#usage; tmuxks (kills current session)
+alias tmuxks='tmux kill-session'
+
 #usage: rl (reloads bash)
 alias rl='exec bash -l'
 
