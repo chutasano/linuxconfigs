@@ -66,6 +66,8 @@ syntax on
 set mouse=n
 set title
 
+set background=dark
+
 "-Indent
 set autoindent
 set smartindent

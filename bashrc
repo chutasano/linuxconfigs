@@ -28,8 +28,18 @@ fi
 
 umask 002
 
+NORMAL="\[\033[0m\]"
+RED="\[\033[31;1m\]"
+WHITE="\[\033[37;1m\]"
+SMILEY="${WHITE}:)${NORMAL}"
+FROWNY="${RED}:(${NORMAL}"
+SELECT="if [ \$? = 0 ]; then echo \"${SMILEY}\"; else echo \"${FROWNY}\"; fi"
+
+PS1="\`${SELECT}\` ${YELLOW}>${NORMAL} "
+PS2="   > "
+
 # colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # some more ls aliases
 alias ll='ls -alF'
