@@ -1,3 +1,45 @@
+#overrides should go AFTER the source line in ~/.bashrc
+
+#setings, see man bash 1
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTSIZE=2000
+
+shopt -s checkwinsize
+
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+umask 002
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+#---------------------#
+#aliases/functions
+
+
 #usage: open <filename>
 alias open='xdg-open' # opens file with default program
 
@@ -74,4 +116,10 @@ function gitirbt {
     git config user.name "Chuta Sano"
     git config user.email "csano@irobot.com"
 }
+
+function gitcmu {
+    git config user.name "Chuta Sano"
+    git config user.email "csano@cmu.edu"
+}
+
 
