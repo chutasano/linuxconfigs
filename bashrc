@@ -31,6 +31,8 @@ umask 002
 NORMAL="\[\033[0m\]"
 RED="\[\033[31;1m\]"
 WHITE="\[\033[37;1m\]"
+YELLOW="\[\033[33;1m\]"
+
 SMILEY="${WHITE}:)${NORMAL}"
 FROWNY="${RED}:(${NORMAL}"
 SELECT="if [ \$? = 0 ]; then echo \"${SMILEY}\"; else echo \"${FROWNY}\"; fi"
@@ -45,6 +47,8 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+alias tmux='tmux -2'
 
 #---------------------#
 #aliases/functions

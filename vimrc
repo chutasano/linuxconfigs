@@ -8,6 +8,8 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
 Plug 'tpope/vim-obsession'
 
+Plug 'vim-latex/vim-latex'
+
 call plug#end()
 " May need to
 "   filetype off
@@ -17,6 +19,9 @@ try
     source ~/linuxconfigs/svimrc
 catch
 endtry
+
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:tex_flavor='latex'
 
 autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
 autocmd FileType c,cpp,h,hpp call SetCppOptions()
