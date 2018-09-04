@@ -80,11 +80,14 @@ function c {
 }
 
 #usage: tmux<n/a> <sessionname>
-alias tmuxn='tmux new-session -s '
-alias tmuxa='tmux attach-session -t '
+alias tn='tmux new-session -s '
+alias ta='tmux attach-session -t '
 
 #usage; tmuxks (kills current session)
-alias tmuxks='tmux kill-session'
+alias tks='tmux kill-session'
+
+#usage; tmuxks (kills current session)
+alias tls='tmux ls'
 
 #usage: rl (reloads bash)
 alias rl='exec bash -l'

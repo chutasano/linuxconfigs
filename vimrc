@@ -65,6 +65,7 @@ endfunction
 vnoremap . :norm.<CR>")"
 
 filetype plugin on
+filetype indent on
 
 syntax on
 
