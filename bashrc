@@ -124,7 +124,11 @@ alias gitb='for k in `git branch|sed s/^..//`;do echo -e `git log -1 --pretty=fo
 
 # usage gitc name (without .git) clones a github repo by me
 function gitc {
-    git clone "https://github.com/chuthagoras/$1.git"
+    if [ -f ~/.ssh/id_rsa/ ] || [ -z "$2"] ; then
+        git clone "git@github.com:chuthagoras/$1.git"
+    else
+        git clone "https://github.com/chuthagoras/$1.git"
+    fi
 }
 
 # sets up name + email on repo
