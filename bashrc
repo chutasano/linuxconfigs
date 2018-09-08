@@ -122,6 +122,10 @@ function gits {
 # usage gitb: shows git branch sorted by last commit date
 alias gitb='for k in `git branch|sed s/^..//`;do echo -e `git log -1 --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" "$k" --`\\t"$k";done|sort -r'
 
+# usage gitc name (without .git) clones a github repo by me
+function gitc {
+    git clone "https://github.com/chuthagoras/$1.git"
+}
 
 # sets up name + email on repo
 function gituml {
@@ -143,5 +147,6 @@ function gitcmu {
     git config user.name "Chuta Sano"
     git config user.email "csano@cmu.edu"
 }
+
 
 
