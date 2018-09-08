@@ -9,7 +9,6 @@ sudo apt install -y \
     vim \
     xclip \
     ack-grep \
-    ack \
     tmux \
     curl \
     bear \
@@ -20,7 +19,6 @@ sudo apt install -y \
     clang \
     python python-dev \
     python3 python3-dev \
-    xclip \
     zip
 
 #ensures tl;dr gets set up
