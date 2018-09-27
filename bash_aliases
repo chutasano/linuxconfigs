@@ -13,7 +13,7 @@ then
     alias open='xdg-open' # opens file with default program
 else
     # todo
-    export WIN_HOME_PATH='C:\linux'
+    export WIN_HOME_PATH='C:\csano'
     open() {
         cmd.exe /c start "${WIN_HOME_PATH}\\$(realpath --relative-to="$HOME" "$(pwd)/$1" | sed 's/\//\\/')"
     }
