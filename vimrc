@@ -22,6 +22,8 @@ endtry
 
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:tex_flavor='latex'
+let g:Tex_DefaultTargetFormat='pdf'
+let g:Tex_ViewRule_pdf = 'open'
 
 autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
 autocmd FileType c,cpp,h,hpp call SetCppOptions()

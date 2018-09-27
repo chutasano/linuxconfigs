@@ -32,4 +32,13 @@ ln -sf ${THISPATH}/ackrc ~/.ackrc
 ln -sf ${THISPATH}/tmux.conf ~/.tmux.conf
 git config --global include.path ${THISPATH}/gitconfig
 
+touch ~/.dotdefs
+grep -qF 'source '"${HOME}"'/.dotdefs' ~/.bashrc || echo 'source '"${HOME}"'/.dotdefs' >> ~/.bashrc
+
 grep -qF 'source '"${THISPATH}"'/bashrc' ~/.bashrc || echo 'source '"${THISPATH}"'/bashrc' >> ~/.bashrc
+grep -qF 'source '"${THISPATH}"'/bash_aliases' ~/.bashrc || echo 'source '"${THISPATH}"'/bash_aliases' >> ~/.bashrc
+
+# for BASH_ENV
+touch ~/.dotaliases
+grep -qF 'source '"${HOME}"'/.dotdefs' ~/.dotaliases || echo 'source '"${HOME}"'/.dotdefs' >> ~/.dotaliases
+grep -qF 'source '"${THISPATH}"'/bash_aliases' ~/.dotaliases || echo 'source '"${THISPATH}"'/bash_aliases' >> ~/.dotaliases
