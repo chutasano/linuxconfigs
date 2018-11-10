@@ -15,6 +15,24 @@ call plug#end()
 "   filetype off
 "   syntax off
 
+function LatexMatrix(m,...)
+    let a:n = a:0 >= 1? a:1 : 1
+    for row in range(a:m)
+        for col in range(a:n)
+            exe "norm a<++> & "
+        endfor
+        if row < a:m-1
+            exe "norm Xi\\\\\<cr>"
+        else
+            exe "norm xxx"
+        endif
+    endfor
+endfunction
+
+function SetLatexOptions()
+    command! -nargs=1 M :call LatexMatrix(<args>)
+endfunction
+
 try
     source ~/linuxconfigs/svimrc
 catch
@@ -27,6 +45,7 @@ let g:Tex_ViewRule_pdf = 'open'
 
 autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
 autocmd FileType c,cpp,h,hpp call SetCppOptions()
+autocmd FileType tex call SetLatexOptions()
 
 function SetCppOptions()
     "-if/while/for for c++
