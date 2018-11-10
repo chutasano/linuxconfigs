@@ -43,7 +43,7 @@ then
     # assumption: running xserver on windows with 0
     export DISPLAY=:0.0
     # assumption: xserver supports this
-    export LIBGL_ALWAYS_INDRECT=1
+    export LIBGL_ALWAYS_INDIRECT=1
 fi
 
 # colored GCC warnings and errors
@@ -51,3 +51,4 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 export BASH_ENV="${HOME}/.dotaliases"
 
+stty -ixon
