@@ -109,5 +109,8 @@ function gitcmu {
     git config user.email "csano@cmu.edu"
 }
 
+# usage C <command> (ignores alias/functions)
+alias C='command'
+
 
 
