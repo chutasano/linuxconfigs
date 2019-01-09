@@ -47,6 +47,12 @@ autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
 autocmd FileType c,cpp,h,hpp call SetCppOptions()
 autocmd FileType tex call SetLatexOptions()
 
+"-xml folding
+augroup XML
+    autocmd!
+    autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+augroup END
+
 function SetCppOptions()
     "-if/while/for for c++
     noremap rif iif ()<Enter>{<Enter>}<Esc>2k=2j$i
