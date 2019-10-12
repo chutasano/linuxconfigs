@@ -58,7 +58,7 @@ alias rl='exec bash -l'
 #credits: https://codereview.stackexchange.com/questions/172324/bash-script-for-referencing-git-status-output-files/173400#173400
 function gits {
     git status
-    mc=1 dc=1 uc=1 ac=1 sc=1
+    mc=1 dc=1 uc=1 ac=1 sc=1 bc=1
     local line status path name
     while read -r line; do
         [ "${line}" ] || continue
@@ -66,8 +66,9 @@ function gits {
         path=${line:2}
         case "$status" in
             " M") name=m$((mc++)) ;;
-            " D") name=d$((dc++)) ;;
+            "D ") name=d$((dc++)) ;;
             "??") name=u$((uc++)) ;;
+            "UU") name=b$((bc++)) ;;
             "A ") name=a$((ac++)) ;;
             "M ") name=s$((sc++)) ;;
             *) echo unsupported status on line: $line
@@ -108,6 +109,9 @@ function gitcmu {
     git config user.name "Chuta Sano"
     git config user.email "csano@cmu.edu"
 }
+
+# usage C <command> (ignores alias/functions)
+alias C='command'
 
 
 

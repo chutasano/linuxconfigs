@@ -44,6 +44,12 @@ then
     export DISPLAY=:0.0
     # assumption: xserver supports this
     export LIBGL_ALWAYS_INDIRECT=1
+
+    # might need to change per launch? investigate
+    export DOCKER_TLS_VERIFY=1
+    export DOCKER_CERT_PATH=/mnt/c/Users/csano/.docker/machine/machines/default
+    export DOCKER_MACHINE_NAME=default
+    export DOCKER_HOST=tcp://192.168.99.101:2376
 fi
 
 # colored GCC warnings and errors
