@@ -4,7 +4,7 @@ Plug 'xuhdev/SingleCompile'
 nmap <F9> :SCCompile<cr>
 nmap <F10> :SCCompileRun<cr>
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
 Plug 'tpope/vim-obsession'
 
@@ -31,6 +31,11 @@ endfunction
 
 function SetLatexOptions()
     command! -nargs=1 M :call LatexMatrix(<args>)
+    set shiftwidth=2
+endfunction
+
+function SetCC0Options()
+    set syntax off
 endfunction
 
 try
@@ -42,10 +47,8 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:tex_flavor='latex'
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_ViewRule_pdf = 'open'
+let g:Tex_GotoError=0
 
-autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
-autocmd FileType c,cpp,h,hpp call SetCppOptions()
-autocmd FileType tex call SetLatexOptions()
 
 "-xml folding
 augroup XML
@@ -105,6 +108,7 @@ set background=dark
 set autoindent
 set smartindent
 set shiftwidth=4
+
 set expandtab
 
 "-Key changes
@@ -162,3 +166,8 @@ function! s:DiffWithSaved()
 endfunction
 com! Diff call s:DiffWithSaved()
 
+autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
+autocmd FileType c,cpp,h,hpp call SetCppOptions()
+autocmd FileType tex call SetLatexOptions()
+
+au BufRead *.c1 set ft=
