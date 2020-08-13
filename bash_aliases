@@ -97,7 +97,7 @@ function gituml {
 
 function gitself {
     git config user.name "Chuta Sano"
-    git config user.email "chuta_japan@comcast.net"
+    git config user.email "chutasano@gmail.com"
 }
 
 function gitirbt {
