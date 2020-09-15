@@ -110,6 +110,11 @@ function gitcmu {
     git config user.email "csano@cmu.edu"
 }
 
+function giteu4 {
+    git config user.name "Lambda"
+    git config user.email "eu4lambdaxx@gmail.com"
+}
+
 # usage C <command> (ignores alias/functions)
 alias C='command'
 
