@@ -1,14 +1,11 @@
 call plug#begin('~/.vim/vplugindir')
-" Compile source files on the fly
-Plug 'xuhdev/SingleCompile'
-nmap <F9> :SCCompile<cr>
-nmap <F10> :SCCompileRun<cr>
 
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
+Plug 'preservim/nerdtree'
 Plug 'tpope/vim-obsession'
-
 Plug 'vim-latex/vim-latex'
+Plug 'derekelkins/agda-vim'
 
 call plug#end()
 " May need to
@@ -124,6 +121,9 @@ nnoremap <C-L> :nohl<CR><C-L>
 "-Paste mode (doesn't mess with indentation and mappings within copy paste)
 set pastetoggle=<F2>
 
+"-vertical terminal short
+com! Vterm :vert term
+
 "-Center screen
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
 
@@ -136,11 +136,14 @@ nnoremap <silent> gh "_yiw?\w\+\_W\+\%#<CR>:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\
 nnoremap <silent> gl "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><c-o>/\w\+\_W\+<CR><c-l>:nohlsearch<CR>
 "- g{ - swap paragraph with next
 nnoremap g{ {dap}p{
-"- alt + j, move current line down 1, alt + k, move current line up 1 (also works with visal mode)
+"- alt + j, move current line down 1, alt + k, move current line up 1 (also works with visual mode)
 nnoremap gj :m .+1<CR>==
 nnoremap gk :m .-2<CR>==
 vnoremap gj :m '>+1<CR>gv=gv
 vnoremap gk :m '<-2<CR>gv=gv
+
+nnoremap ls :NERDTreeMirror<CR>:NERDTreeFocus<CR>
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
