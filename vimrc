@@ -142,7 +142,7 @@ nnoremap gk :m .-2<CR>==
 vnoremap gj :m '>+1<CR>gv=gv
 vnoremap gk :m '<-2<CR>gv=gv
 
-nnoremap ls :NERDTreeMirror<CR>:NERDTreeFocus<CR>
+nnoremap LS :NERDTreeMirror<CR>:NERDTreeFocus<CR>
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " Search for selected text, forwards or backwards.
@@ -169,8 +169,12 @@ function! s:DiffWithSaved()
 endfunction
 com! Diff call s:DiffWithSaved()
 
+
+set number
+set relativenumber
 autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
 autocmd FileType c,cpp,h,hpp call SetCppOptions()
 autocmd FileType tex call SetLatexOptions()
 
 au BufRead *.c1 set ft=
+
