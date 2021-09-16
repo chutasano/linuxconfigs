@@ -1,10 +1,20 @@
 call plug#begin('~/.vim/vplugindir')
 
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+" Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py' }
+Plug 'sirver/ultisnips'
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
 Plug 'preservim/nerdtree'
 Plug 'tpope/vim-obsession'
-Plug 'vim-latex/vim-latex'
+Plug 'lervag/vimtex'
+let g:tex_flavor='latex'
+let g:vimtex_view_method = 'zathura'
+set conceallevel=0
+let g:UltiSnipsEditSplit="vertical"
+
 Plug 'derekelkins/agda-vim'
 
 call plug#end()
@@ -27,8 +37,8 @@ function LatexMatrix(m,...)
 endfunction
 
 function SetLatexOptions()
-    command! -nargs=1 M :call LatexMatrix(<args>)
     set shiftwidth=2
+    noremap TOC :VimtexTocToggle<CR>
 endfunction
 
 function SetCC0Options()
@@ -39,13 +49,6 @@ try
     source ~/linuxconfigs/svimrc
 catch
 endtry
-
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:tex_flavor='latex'
-let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_ViewRule_pdf = 'open'
-let g:Tex_GotoError=0
-
 
 "-xml folding
 augroup XML
@@ -172,6 +175,7 @@ com! Diff call s:DiffWithSaved()
 
 set number
 set relativenumber
+set encoding=utf-8
 autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
 autocmd FileType c,cpp,h,hpp call SetCppOptions()
 autocmd FileType tex call SetLatexOptions()
