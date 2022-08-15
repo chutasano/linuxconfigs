@@ -110,9 +110,9 @@ function gitcmu {
     git config user.email "csano@cmu.edu"
 }
 
-function giteu4 {
-    git config user.name "Lambda"
-    git config user.email "eu4lambdaxx@gmail.com"
+function gitmcg {
+    git config user.name "Chuta Sano"
+    git config user.email "chuta.sano@mail.mcgill.ca"
 }
 
 # usage C <command> (ignores alias/functions)
