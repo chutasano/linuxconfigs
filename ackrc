@@ -1,4 +1,5 @@
 --type-set=cpp=.c,.h,.cpp,.hpp
 --type-set=py=.py
 --type-set=hpp=.h,.hpp
+--type-set=txt=.txt
 ##--pager=less -r

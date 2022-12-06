@@ -12,7 +12,7 @@ if [[ -z $DOT_WSL ]]
 then
     alias open='xdg-open' # opens file with default program
 else
-    # todo
+    # todo only works for WSL 1
     export WIN_HOME_PATH='C:\csano'
     open() {
         cmd.exe /c start "${WIN_HOME_PATH}\\$(realpath --relative-to="$HOME" "$(pwd)/$1" | sed 's/\//\\/')"

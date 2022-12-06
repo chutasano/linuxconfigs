@@ -3,13 +3,14 @@ call plug#begin('~/.vim/vplugindir')
 
 " Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py' }
 Plug 'sirver/ultisnips'
-let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+let g:UltiSnipsEditSplit="tabdo"
 
 Plug 'tpope/vim-obsession'
 Plug 'lervag/vimtex'
-let g:tex_flavor='latex'
+let g:tex_flavor='lualatex'
 let g:vimtex_view_method = 'zathura'
 set conceallevel=0
 let g:UltiSnipsEditSplit="vertical"
@@ -24,20 +25,6 @@ call plug#end()
 " May need to
 "   filetype off
 "   syntax off
-
-function LatexMatrix(m,...)
-    let a:n = a:0 >= 1? a:1 : 1
-    for row in range(a:m)
-        for col in range(a:n)
-            exe "norm a<++> & "
-        endfor
-        if row < a:m-1
-            exe "norm Xi\\\\\<cr>"
-        else
-            exe "norm xxx"
-        endif
-    endfor
-endfunction
 
 function SetLatexOptions()
     set shiftwidth=2
@@ -102,7 +89,7 @@ filetype indent on
 
 syntax on
 
-set mouse=n
+set mouse=nc
 set title
 
 set background=dark
@@ -194,9 +181,43 @@ com! Diff call s:DiffWithSaved()
 set number
 set relativenumber
 set encoding=utf-8
-autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
-autocmd FileType c,cpp,h,hpp call SetCppOptions()
-autocmd FileType tex call SetLatexOptions()
+augroup ExtensionSpec
+    autocmd!
+    autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
+    autocmd FileType c,cpp,h,hpp call SetCppOptions()
+    autocmd FileType tex call SetLatexOptions()
+augroup END
 
 au BufRead *.c1 set ft=
 
+function! MarkWindowSwap()
+    let g:markedWinNum = winnr()
+endfunction
+
+function! DoWindowSwap()
+    "Mark destination
+    let curNum = winnr()
+    let curBuf = bufnr( "%" )
+    exe g:markedWinNum . "wincmd w"
+    "Switch to source and shuffle dest->source
+    let markedBuf = bufnr( "%" )
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' curBuf
+    "Switch to dest and shuffle source->dest
+    exe curNum . "wincmd w"
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' markedBuf
+endfunction
+
+nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
+nmap <silent> <leader>pw :call DoWindowSwap()<CR>
+
+" Sadly only Vim -> Windows clipboard.
+" Not sure how to nicely do Windows -> " Vim register, but I guess I have
+" ctrl+shift+v...
+if system('uname -r') =~ "microsoft"
+  augroup WinClipboard
+  autocmd!
+  autocmd TextYankPost * if v:event["regname"] == 'w' | :call system('/mnt/c/windows/system32/clip.exe ',@") | endif
+  augroup END
+endif

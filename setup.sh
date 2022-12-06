@@ -30,6 +30,8 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm > /dev/null 2>
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --silent
 
 ln -sf ${THISPATH}/vimrc ~/.vimrc
+mkdir ~/.vim
+ln -sf ${THISPATH}/UltiSnips ~/.vim/UltiSnips
 ln -sf ${THISPATH}/ackrc ~/.ackrc
 ln -sf ${THISPATH}/tmux.conf ~/.tmux.conf
 git config --global include.path ${THISPATH}/gitconfig

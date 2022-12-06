@@ -1,0 +1,225 @@
+global !p
+
+def notmath():
+    return vim.eval('vimtex#syntax#in_mathzone()') != '1'
+def math():
+    return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+def comment(): 
+    return vim.eval('vimtex#syntax#in_comment()') == '1'
+def env(name):
+    [x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
+    return x != '0' and y != '0'
+
+def make_greek(letter):
+    char2greek = {'a' : "alpha", 
+        'b' : "beta",
+        'g' : "gamma",
+        'G' : "Gamma",
+        'd' : "delta",
+        'D' : "Delta",
+        'e' : "varepsilon",
+        'z' : "zeta",
+        # note: missing theta (and a few others)
+        'i' : "iota",
+        'k' : "kappa",
+        'l' : "lambda",
+        'L' : "Lambda",
+        'm' : "mu",
+        'n' : "nu",
+        'p' : "pi",
+        'P' : "Pi",
+        'r' : "rho",
+        's' : "sigma",
+        'S' : "Sigma",
+        't' : "tau",
+        'f' : "phi",
+        'F' : "Phi",
+        'o' : "omega"}
+    if letter not in char2greek:
+        return "ASDF"
+    else:
+        return '\\' + char2greek[letter]
+
+endglobal
+
+snippet template "Basic template" b
+\documentclass[a4paper]{article}
+\usepackage{xcolor}
+\definecolor{darkgreen}{rgb}{0.0,0.6,0.0}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{proof}
+\usepackage{verbatim}
+\usepackage[backend=bibtex,style=alphabetic]{biblatex}
+\usepackage[breaklinks=true,colorlinks=true,linkcolor=blue,citecolor=darkgreen]{hyperref}
+\usepackage{chngcntr}
+
+\newcommand{\defor}{\; | \;}
+\newcommand{\defeq}{\; ::= \;}
+
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem{thm}{Theorem}
+\newtheorem*{prf}{Proof}
+\theoremstyle{remark}
+\newtheorem{case}{Case}
+\newtheorem{subcase}{Subcase}
+\counterwithin*{case}{lem}
+\counterwithin*{case}{thm}
+\counterwithin*{subcase}{case}
+\newtheorem{defn}{Definition}
+
+\begin{document}
+
+\title{$1}
+\author{Chuta Sano$2}
+\date{\today}
+\maketitle{}
+
+$0
+
+\end{document}
+endsnippet
+
+snippet stemplate "Slides template" b
+\documentclass{beamer}
+\usetheme{Madrid}
+
+\title{$1}
+\author{Chuta Sano$2}
+\date{\today}
+
+\begin{document}
+\frame{\titlepage}
+
+$0
+
+\end{document}
+endsnippet
+
+snippet "^([ ]*);([a-zA-Z]+)[ ]" "begin/end env" rA
+`!p env_name = match.group(2)
+prefix = ""
+if env_name == "enum":
+	env_name = "enumerate"
+	prefix = "\item"
+elif env_name == "item":
+	env_name = "itemize"
+	prefix = "\item"
+elif env_name == "f":
+	env_name = "frame"
+	prefix = "\\frametitle"
+elif env_name == "g":
+	env_name = "gather"
+elif env_name == "G":
+	env_name = "gather*"
+elif env_name == "a":
+	env_name = "align"
+elif env_name == "A":
+	env_name = "align*"
+snip.rv = match.group(1) + "\\begin{" + env_name + "}"`
+	`!p snip.rv = match.group(1) + prefix` $1
+`!p snip.rv = match.group(1) + "\\end{" + env_name + "}"`
+$0
+endsnippet
+
+context "math()"
+snippet __ "subscript expand" iA
+_{$1}$0
+endsnippet
+
+context "math()"
+snippet ^^ "superscript expand" iA
+^{$1}$0
+endsnippet
+
+context "notmath()"
+snippet mm "Inline math" wA
+\$$1\$$0
+endsnippet
+
+context "notmath()"
+snippet dm "Display math" bA
+\[
+	$1
+\]
+$0
+endsnippet
+
+context "math()"
+snippet tt "Text inside math" wA
+\text{$1}$0
+endsnippet
+
+context "math()"
+snippet ii "inference rule" wA
+\infer[$1]{$2}{$3}$0
+endsnippet
+
+context "math()"
+snippet >= "geq" iA
+\geq
+endsnippet
+
+context "math()"
+snippet <= "leq" iA
+\leq
+endsnippet
+
+# surely there's a way to do this without copying two functions?
+context "notmath()"
+snippet ",([a-zA-Z])" "greek letters" rA
+\$`!p snip.rv = make_greek(match.group(1))`$1\$$0
+endsnippet
+
+context "math()"
+snippet ",([a-zA-Z])" "greek letters" rA
+`!p snip.rv = make_greek(match.group(1))`$0
+endsnippet
+
+context "notmath()"
+snippet "\\s " "section" brA
+\section{$1}
+$0
+endsnippet
+
+context "notmath()"
+snippet "\\ss " "subsection" brA
+\subsection{$1}
+$0
+endsnippet
+
+context "notmath()"
+snippet "\\sss " "subsubsection" brA
+\subsubsection{$1}
+$0
+endsnippet
+
+context "notmath()"
+snippet "\\S " "section*" brA
+\section*{$1}
+$0
+endsnippet
+
+context "notmath()"
+snippet "\\SS " "subsection*" brA
+\subsection*{$1}
+$0
+endsnippet
+
+context "notmath()"
+snippet "\\SSS " "subsubsection*" brA
+\subsubsection*{$1}
+$0
+endsnippet
+
+context "notmath()"
+snippet "\\p " "paragraph" brA
+\paragraph{$1}
+$0
+endsnippet
+
+# credits:
+# https://github.com/gillescastel/latex-snippets/blob/master/tex.snippets
+# https://ejmastnak.github.io/tutorials/vim-latex/ultisnips.html#subjective-practical-tips-for-fast-editing
+
