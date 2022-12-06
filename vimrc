@@ -137,7 +137,8 @@ tnoremap <C-j> <C-w>j
 tnoremap <C-k> <C-w>k
 tnoremap <C-l> <C-w>l
 tnoremap <C-n> <C-w>N
-tnoremap <C-:> <C-w>:
+"- Might be risky? Not sure how often I use colon in terminal...
+tnoremap : <C-w>:
 "-vertical terminal short
 "-vertical terminal short
 com! Vterm :vert term
