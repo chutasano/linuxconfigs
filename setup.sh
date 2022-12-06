@@ -24,7 +24,7 @@ sudo apt install -y \
     zathura
 
 #ensures tl;dr gets set up
-tldr
+tldr --update
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm > /dev/null 2>&1
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim --silent

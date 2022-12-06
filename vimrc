@@ -7,7 +7,6 @@ let g:UltiSnipsExpandTrigger = '<C-j>'
 let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 
-Plug 'preservim/nerdtree'
 Plug 'tpope/vim-obsession'
 Plug 'lervag/vimtex'
 let g:tex_flavor='latex'
@@ -16,6 +15,10 @@ set conceallevel=0
 let g:UltiSnipsEditSplit="vertical"
 
 Plug 'derekelkins/agda-vim'
+Plug 'mileszs/ack.vim'
+
+Plug 'preservim/nerdtree'
+Plug 'vim-scripts/nerdtree-ack'
 
 call plug#end()
 " May need to
@@ -124,8 +127,22 @@ nnoremap <C-L> :nohl<CR><C-L>
 "-Paste mode (doesn't mess with indentation and mappings within copy paste)
 set pastetoggle=<F2>
 
+"- Terminal/QoL stuff
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+tnoremap <C-h> <C-w>h
+tnoremap <C-j> <C-w>j
+tnoremap <C-k> <C-w>k
+tnoremap <C-l> <C-w>l
+tnoremap <C-n> <C-w>N
+tnoremap <C-:> <C-w>:
+"-vertical terminal short
 "-vertical terminal short
 com! Vterm :vert term
+
+
 
 "-Center screen
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>

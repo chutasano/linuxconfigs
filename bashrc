@@ -5,6 +5,9 @@ shopt -s histappend
 HISTCONTROL=ignoreboth
 HISTSIZE=2000
 
+#I rarely accidentally hit tab, but I do accidentally hit ctrl+i on vim term, which is annoying...
+shopt -s no_empty_cmd_completion
+
 shopt -s checkwinsize
 
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
