@@ -128,6 +128,7 @@ tnoremap <C-k> <C-w>k
 tnoremap <C-l> <C-w>l
 tnoremap <C-n> <C-w>N
 tnoremap LS <C-w>:NERDTreeMirror<CR><C-w>:NERDTreeFocus<CR>
+"- don't need atm. tnoremap LCS <C-w>:NERDTreeMirror<CR><C-w>:NERDTreeFind<CR><C-w>:NERDTreeFocus<CR>
 tnoremap <Leader>ww <C-w>:call WindowSwap#EasyWindowSwap()<CR>
 "- Might be risky? Not sure how often I use colon in terminal...
 "- tnoremap : <C-w>:
@@ -155,6 +156,7 @@ vnoremap gj :m '>+1<CR>gv=gv
 vnoremap gk :m '<-2<CR>gv=gv
 
 nnoremap LS :NERDTreeMirror<CR>:NERDTreeFocus<CR>
+nnoremap LCS :NERDTreeMirror<CR>:NERDTreeFind<CR>:NERDTreeFocus<CR>
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " Search for selected text, forwards or backwards.
@@ -226,8 +228,8 @@ if system('uname -r') =~ "microsoft"
   augroup END
 endif
 
-" CDC = Change to Directory of Current file
-command CDC cd %:p:h
+" LCD = Change to Directory of Current file
+command LCD lcd %:p:h
 
 def g:Tapi_lcd(_, path: string)
     if isdirectory(path)
