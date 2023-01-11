@@ -21,6 +21,9 @@ Plug 'mileszs/ack.vim'
 Plug 'preservim/nerdtree'
 Plug 'vim-scripts/nerdtree-ack'
 
+Plug 'tpope/vim-surround'
+Plug 'wesQ3/vim-windowswap'
+
 call plug#end()
 " May need to
 "   filetype off
@@ -109,7 +112,7 @@ set backspace=indent,eol,start
 set ignorecase
 set smartcase
 set hlsearch
-nnoremap <C-L> :nohl<CR><C-L>
+nnoremap <Leader>/ :nohl<CR>
 
 "-Paste mode (doesn't mess with indentation and mappings within copy paste)
 set pastetoggle=<F2>
@@ -124,9 +127,10 @@ tnoremap <C-j> <C-w>j
 tnoremap <C-k> <C-w>k
 tnoremap <C-l> <C-w>l
 tnoremap <C-n> <C-w>N
+tnoremap LS <C-w>:NERDTreeMirror<CR><C-w>:NERDTreeFocus<CR>
+tnoremap <Leader>ww <C-w>:call WindowSwap#EasyWindowSwap()<CR>
 "- Might be risky? Not sure how often I use colon in terminal...
-tnoremap : <C-w>:
-"-vertical terminal short
+"- tnoremap : <C-w>:
 "-vertical terminal short
 com! Vterm :vert term
 
@@ -221,3 +225,16 @@ if system('uname -r') =~ "microsoft"
   autocmd TextYankPost * if v:event["regname"] == 'w' | :call system('/mnt/c/windows/system32/clip.exe ',@") | endif
   augroup END
 endif
+
+" CDC = Change to Directory of Current file
+command CDC cd %:p:h
+
+def g:Tapi_lcd(_, path: string)
+    if isdirectory(path)
+        execute 'silent lcd ' .. fnameescape(path)
+    endif
+enddef
+
+" Quick Beluga support
+au BufRead,BufNewFile *.bel setfiletype bel
+

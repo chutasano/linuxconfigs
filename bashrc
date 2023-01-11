@@ -55,6 +55,18 @@ then
     export DOCKER_HOST=tcp://192.168.99.101:2376
 fi
 
+# vim term stuff
+if [[ -n "$VIM_TERMINAL" ]]; then
+    PROMPT_COMMAND='_vim_sync_PWD'
+    function _vim_sync_PWD() {
+        printf '\033]51;["call", "Tapi_lcd", "%q"]\007' "$PWD"
+    }
+    # maybe a bit lazy... should handle multiple args and handle certain flags differently?
+    function vim() {
+        printf '\033]51;["drop", "%q"]\007' "$1"
+    }
+fi
+
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
