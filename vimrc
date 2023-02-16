@@ -23,6 +23,7 @@ Plug 'vim-scripts/nerdtree-ack'
 
 Plug 'tpope/vim-surround'
 Plug 'wesQ3/vim-windowswap'
+Plug 'whonore/Coqtail'
 
 call plug#end()
 " May need to
