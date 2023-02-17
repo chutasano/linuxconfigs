@@ -37,8 +37,35 @@ alias u='sudo apt update && sudo apt upgrade'
 alias lx='ls -X'
 
 #usage: c <dir>
-function c {
-  builtin cd "$@" && ls -F
+#c -n
+# for some number n to go up the directory stack
+# from: https://unix.stackexchange.com/a/180640
+# TODO stack size > 1
+# export DIRSTACKMAX=10
+c() {
+[ "$((${DIRSTACKMAX##*[!0-9]*}0/10))" -gt 0 ] &&
+        set -- "$@" "$DIRSTACK"               &&
+        DIRSTACK='pwd -P >&3; command cd'     ||
+        { command cd "$@" && ls -F; return; }
+_q()    while   case "$1" in (*\'*) :   ;;      (*)
+                ! DIRSTACK="$DIRSTACK '$2$1'"   ;;esac
+        do      set -- "${1#*\'}" "$2${1%%\'*}'\''"
+        done
+while   [ "$#" -gt 1 ]
+do      case    ${1:---} in (-|[!-]*|-*[!0-9]*) : ;;
+        (*)     eval "  set $((${1#-}+1))"' "${'"$#}\""
+                eval '  set -- "$2"'" $2"'
+                        set -- "${'"$1"'}" "$1"'
+        ;;esac; _q "$1"; shift
+done
+eval "  DIRSTACK=; $DIRSTACK    &&"'
+        _q "$OLDPWD"            &&
+        DIRSTACK=$DIRSTACK\ $1
+        set "$?" "${DIRSTACK:=$1}"'" $1
+"       3>/dev/null
+[ "$(($#-1))" -gt "$DIRSTACKMAX" ] &&
+        DIRSTACK="${DIRSTACK% \'/*}"
+unset -f _q; return "$1"
 }
 
 #usage: tmux<n/a> <sessionname>
