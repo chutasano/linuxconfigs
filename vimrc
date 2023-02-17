@@ -128,6 +128,8 @@ tnoremap <C-j> <C-w>j
 tnoremap <C-k> <C-w>k
 tnoremap <C-l> <C-w>l
 tnoremap <C-n> <C-w>N
+tnoremap <C-PageDown> <C-w>:tabn<CR>
+tnoremap <C-PageUp> <C-w>:tabp<CR>
 tnoremap LS <C-w>:NERDTreeMirror<CR><C-w>:NERDTreeFocus<CR>
 "- don't need atm. tnoremap LCS <C-w>:NERDTreeMirror<CR><C-w>:NERDTreeFind<CR><C-w>:NERDTreeFocus<CR>
 tnoremap <Leader>ww <C-w>:call WindowSwap#EasyWindowSwap()<CR>
