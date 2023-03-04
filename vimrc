@@ -133,12 +133,12 @@ tnoremap <C-PageUp> <C-w>:tabp<CR>
 tnoremap LS <C-w>:NERDTreeMirror<CR><C-w>:NERDTreeFocus<CR>
 "- don't need atm. tnoremap LCS <C-w>:NERDTreeMirror<CR><C-w>:NERDTreeFind<CR><C-w>:NERDTreeFocus<CR>
 tnoremap <Leader>ww <C-w>:call WindowSwap#EasyWindowSwap()<CR>
-"- Might be risky? Not sure how often I use colon in terminal...
-"- tnoremap : <C-w>:
+"- Might be risky? Not sure how often I use two colons in terminal...
+tnoremap :: <C-w>:
+"-previous command (assumes particular prompt structure)
+tnoremap  ^^ <C-w>N?:) > .\\|:( > .<CR>:nohl<CR>2w
 "-vertical terminal short
 com! Vterm :vert term
-
-
 
 "-Center screen
 nnoremap <Leader>zz :let &scrolloff=999-&scrolloff<CR>
