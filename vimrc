@@ -243,3 +243,4 @@ enddef
 " Quick Beluga support
 au BufRead,BufNewFile *.bel setfiletype bel
 
+set tags=./tags;$HOME
