@@ -63,7 +63,19 @@ if [[ -n "$VIM_TERMINAL" ]]; then
     }
     # maybe a bit lazy... should handle multiple args and handle certain flags differently?
     function vim() {
-        printf '\033]51;["drop", "%q"]\007' "$1"
+        printf '\033]51;["call", "Tapi_hvim", "%q"]\007' "$1"
+    }
+    function hvim() {
+        printf '\033]51;["call", "Tapi_hvim", "%q"]\007' "$1"
+    }
+    function jvim() {
+        printf '\033]51;["call", "Tapi_jvim", "%q"]\007' "$1"
+    }
+    function kvim() {
+        printf '\033]51;["call", "Tapi_kvim", "%q"]\007' "$1"
+    }
+    function lvim() {
+        printf '\033]51;["call", "Tapi_lvim", "%q"]\007' "$1"
     }
 fi
 

@@ -240,6 +240,19 @@ def g:Tapi_lcd(_, path: string)
     endif
 enddef
 
+def g:Tapi_hvim(_, path: string)
+    execute 'vsplit ' .. fnameescape(path)
+enddef
+def g:Tapi_jvim(_, path: string)
+    execute 'split ' .. fnameescape(path)
+enddef
+def g:Tapi_kvim(_, path: string)
+    execute 'belowright split ' .. fnameescape(path)
+enddef
+def g:Tapi_lvim(_, path: string)
+    execute 'belowright vsplit ' .. fnameescape(path)
+enddef
+
 " Quick Beluga support
 au BufRead,BufNewFile *.bel setfiletype bel
 
