@@ -117,19 +117,10 @@ function gitc {
 }
 
 # sets up name + email on repo
-function gituml {
-    git config user.name "Chuta Sano"
-    git config user.email "chuta_sano@student.uml.edu"
-}
 
 function gitself {
     git config user.name "Chuta Sano"
     git config user.email "chutasano@gmail.com"
-}
-
-function gitirbt {
-    git config user.name "Chuta Sano"
-    git config user.email "csano@irobot.com"
 }
 
 function gitcmu {
