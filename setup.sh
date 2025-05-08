@@ -2,12 +2,10 @@
 
 THISPATH=$(dirname $(readlink -f $0))
 
-sudo add-apt-repository -y ppa:jonathonf/vim
 sudo apt update
 
  # on WSL I found ack instead of ack-grep??
 sudo apt install -y \
-    vim \
     xclip \
     ack-grep \
     tmux \

@@ -10,7 +10,7 @@ let g:UltiSnipsEditSplit="tabdo"
 
 Plug 'tpope/vim-obsession'
 Plug 'lervag/vimtex'
-let g:tex_flavor='lualatex'
+let g:tex_flavor='latex'
 let g:vimtex_view_method = 'zathura'
 set conceallevel=0
 let g:UltiSnipsEditSplit="vertical"
@@ -32,6 +32,8 @@ call plug#end()
 
 function SetLatexOptions()
     set shiftwidth=2
+    set foldmethod=expr
+    set foldlevel=999
     noremap TOC :VimtexTocToggle<CR>
 endfunction
 
@@ -101,7 +103,7 @@ set background=dark
 "-Indent
 set autoindent
 set smartindent
-set shiftwidth=4
+set shiftwidth=2
 
 set expandtab
 
@@ -244,16 +246,24 @@ def g:Tapi_hvim(_, path: string)
     execute 'vsplit ' .. fnameescape(path)
 enddef
 def g:Tapi_jvim(_, path: string)
-    execute 'split ' .. fnameescape(path)
+    execute 'belowright split ' .. fnameescape(path)
 enddef
 def g:Tapi_kvim(_, path: string)
-    execute 'belowright split ' .. fnameescape(path)
+    execute 'split ' .. fnameescape(path)
 enddef
 def g:Tapi_lvim(_, path: string)
     execute 'belowright vsplit ' .. fnameescape(path)
 enddef
 
 " Quick Beluga support
-au BufRead,BufNewFile *.bel setfiletype bel
+augroup Beluga
+  autocmd!
+  au BufRead,BufNewFile *.bel setfiletype bel
+augroup END
+
+
+" Edit vimrc (https://superuser.com/questions/132029/how-do-you-reload-your-vimrc-file-without-restarting-vim)
+nnoremap <leader>ev :tabe $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
 
 set tags=./tags;$HOME

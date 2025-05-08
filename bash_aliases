@@ -11,11 +11,17 @@ alias tmux='tmux -2'
 if [[ -z $DOT_WSL ]]
 then
     alias open='xdg-open' # opens file with default program
-else
+elif [ $DOT_WSL -eq 1 ]
+then
     # todo only works for WSL 1
     export WIN_HOME_PATH='C:\csano'
     open() {
         cmd.exe /c start "${WIN_HOME_PATH}\\$(realpath --relative-to="$HOME" "$(pwd)/$1" | sed 's/\//\\/')"
+    }
+elif [ $DOT_WSL -eq 2 ]
+then
+    open() {
+      cmd.exe /c start "$(wslpath -w $1)"
     }
 fi
 
