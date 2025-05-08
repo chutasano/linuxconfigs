@@ -16,7 +16,6 @@ sudo apt install -y \
     build-essential \
     cmake \
     clang \
-    python python-dev \
     python3 python3-dev \
     zip \
     zathura
