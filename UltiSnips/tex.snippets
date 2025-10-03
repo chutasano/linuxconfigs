@@ -83,7 +83,12 @@ endsnippet
 
 snippet stemplate "Slides template" b
 \documentclass{beamer}
-\usetheme{Madrid}
+\usetheme{Luebeck}
+\setbeamertemplate{page number in head/foot}[totalframenumber]
+
+%\setbeameroption{hide notes} % Only slides
+%\setbeameroption{show only notes} % Only notes
+\setbeameroption{show notes on second screen=right} % Both
 
 \title{$1}
 \author{Chuta Sano$2}
