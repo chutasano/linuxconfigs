@@ -1,9 +1,11 @@
-call plug#begin('~/.vim/vplugindir')
+let s:en_spellfile = expand("~/linuxconfigs/en.utf-8.add")
+let s:en_replacefile = expand("~/linuxconfigs/textidote_replacements.txt")
 
+call plug#begin('~/.vim/vplugindir')
 
 " Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py' }
 Plug 'sirver/ultisnips'
-let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsExpandTrigger = '<C-l>'
 let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 let g:UltiSnipsEditSplit="tabdo"
@@ -23,13 +25,27 @@ Plug 'vim-scripts/nerdtree-ack'
 Plug 'tpope/vim-surround'
 Plug 'wesQ3/vim-windowswap'
 Plug 'whonore/Coqtail'
+
+Plug 'PatrBal/vim-textidote'
+let g:textidote_jar = '/opt/textidote/textidote.jar'
+let g:textidote_win_height = 10
+let g:textidote_lang = 'en'
+let g:textidote_dictionary = s:en_spellfile
+" let g:textidote_ignore_macros = 'lstinline'
+" replacefile takes care of lstinline and others...
+let g:textidote_replacements = s:en_replacefile
+
 Plug 'github/copilot.vim'
 Plug 'DanBradbury/copilot-chat.vim'
 
 
 call plug#end()
 
-nnoremap <leader>cc :CopilotChatOpen<CR>
+vnoremap <silent> <Leader>te :'<,'>TeXtidoteToggle<CR>
+nnoremap <silent> <Leader>te :TeXtidoteToggle<CR>
+
+nnoremap <leader>cc :CopilotChatOpen<CR>i
+tnoremap <leader>cc <C-w>:CopilotChatOpen<CR>i
 
 " May need to
 "   filetype off
@@ -39,6 +55,8 @@ function SetLatexOptions()
     set shiftwidth=2
     set foldmethod=expr
     set foldlevel=999
+    set spelllang=en
+    execute "set spellfile=" . s:en_spellfile
     noremap TOC :VimtexTocToggle<CR>
 endfunction
 
@@ -269,7 +287,9 @@ augroup END
 
 " Edit vimrc (https://superuser.com/questions/132029/how-do-you-reload-your-vimrc-file-without-restarting-vim)
 nnoremap <leader>ev :tabe $MYVIMRC<CR>
+tnoremap <leader>ev <C-w>:tabe $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
+tnoremap <leader>sv <C-w>:source $MYVIMRC<CR>
 
 set tags=./tags;$HOME
 
