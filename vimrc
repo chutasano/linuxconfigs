@@ -31,8 +31,7 @@ let g:textidote_jar = '/opt/textidote/textidote.jar'
 let g:textidote_win_height = 10
 let g:textidote_lang = 'en'
 let g:textidote_dictionary = s:en_spellfile
-" let g:textidote_ignore_macros = 'lstinline'
-" replacefile takes care of lstinline and others...
+let g:textidote_ignore_macros = 'qw,quad,ghost,Qcircuit'
 let g:textidote_replacements = s:en_replacefile
 
 Plug 'github/copilot.vim'

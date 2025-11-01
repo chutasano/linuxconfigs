@@ -1,4 +1,4 @@
-\\autoref\{[^{}]*\}	X
+\\autoref\{([^{}])*\}	\\ref\{\1\}
 \\lstinline(.).+?\1	X
 \\begin\{example\}	 
 \\end\{example\}	 
