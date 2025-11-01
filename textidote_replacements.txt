@@ -1,0 +1,5 @@
+\\autoref\{[^{}]*\}	X
+\\lstinline(.).+?\1	X
+\\begin\{example\}	 
+\\end\{example\}	 
+\$\$(.+)?\$\$		$\1$
