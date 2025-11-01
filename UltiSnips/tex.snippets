@@ -224,6 +224,25 @@ snippet "\\p " "paragraph" brA
 $0
 endsnippet
 
+context "env('frame')"
+snippet "nn " "note" brA
+\note[item]{$1}$0
+endsnippet
+
+# TODO itemize/enumerate
+context "env('itemize')"
+snippet "ii " "item-i" brA
+\item 
+endsnippet
+
+context "env('enumerate')"
+snippet "ii " "item-e" brA
+\item 
+endsnippet
+
+
+
+
 # credits:
 # https://github.com/gillescastel/latex-snippets/blob/master/tex.snippets
 # https://ejmastnak.github.io/tutorials/vim-latex/ultisnips.html#subjective-practical-tips-for-fast-editing
