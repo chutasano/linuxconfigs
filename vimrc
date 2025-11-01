@@ -15,7 +15,6 @@ let g:vimtex_view_method = 'zathura'
 set conceallevel=0
 let g:UltiSnipsEditSplit="vertical"
 
-Plug 'derekelkins/agda-vim'
 Plug 'mileszs/ack.vim'
 
 Plug 'preservim/nerdtree'
@@ -24,8 +23,14 @@ Plug 'vim-scripts/nerdtree-ack'
 Plug 'tpope/vim-surround'
 Plug 'wesQ3/vim-windowswap'
 Plug 'whonore/Coqtail'
+Plug 'github/copilot.vim'
+Plug 'DanBradbury/copilot-chat.vim'
+
 
 call plug#end()
+
+nnoremap <leader>cc :CopilotChatOpen<CR>
+
 " May need to
 "   filetype off
 "   syntax off
@@ -267,3 +272,7 @@ nnoremap <leader>ev :tabe $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
 set tags=./tags;$HOME
+
+"U
+let $PATH .= ':/usr/local/texlive/2025/bin/x86_64-linux'
+
