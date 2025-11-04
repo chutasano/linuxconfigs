@@ -10,6 +10,8 @@ let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 let g:UltiSnipsEditSplit="tabdo"
 
+Plug 'tpope/vim-fugitive'
+
 Plug 'tpope/vim-obsession'
 Plug 'lervag/vimtex'
 let g:tex_flavor='latex'
