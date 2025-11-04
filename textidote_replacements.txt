@@ -1,4 +1,4 @@
-\\autoref	\\ref
+\\autoref	\ref
 \\lstinline(.).+?\1	X
 \\begin\{example\}	 
 \\end\{example\}	 
