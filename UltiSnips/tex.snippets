@@ -111,6 +111,8 @@ if env_name == "enum":
 elif env_name == "item":
 	env_name = "itemize"
 	prefix = "\item "
+elif env_name == "fig":
+	env_name = "figure"
 elif env_name == "f":
 	env_name = "frame"
 	prefix = "\\frametitle "
@@ -123,9 +125,12 @@ elif env_name == "a":
 elif env_name == "A":
 	env_name = "align*"
 snip.rv = match.group(1) + "\\begin{" + env_name + "}"`
-	`!p snip.rv = match.group(1) + prefix`$1
-`!p snip.rv = match.group(1) + "\\end{" + env_name + "}"`
-$0
+`!p
+if env_name == "figure":
+	snip.rv = match.group(1) + "\\caption{}\n" + match.group(1) + "\\label{fig:}"
+else:
+	snip.rv = match.group(1) + "  " + prefix + ""`
+`!p snip.rv = match.group(1) + "\\end{" + env_name + "}"`$0
 endsnippet
 
 context "math()"
