@@ -142,5 +142,42 @@ function gitmcg {
 # usage C <command> (ignores alias/functions)
 alias C='command'
 
+# Wrapper function for unison
+unison() {
+    # Path to the Python script
+    PYTHON_SCRIPT="$HOME/ws/.unison-ignore-gen.py"
+
+    # Path to the timestamp file
+    TIMESTAMP_FILE="$HOME/.unison-ignore-gen-last-run"
+
+    # Check if the --force-update flag is passed
+    FORCE_UPDATE=false
+    for arg in "$@"; do
+        if [ "$arg" = "--force-update" ]; then
+            FORCE_UPDATE=true
+            # Remove the flag from the arguments
+            set -- "${@/--force-update/}"
+            break
+        fi
+    done
+
+    # Check if the Python script needs to be run
+    if [ "$FORCE_UPDATE" = true ] || [ ! -f "$TIMESTAMP_FILE" ] || [ $(($(date +%s) - $(cat "$TIMESTAMP_FILE"))) -ge 86400 ]; then
+        echo "Running the Python script to update ignore rules..."
+        python3 "$PYTHON_SCRIPT"
+        if [ $? -ne 0 ]; then
+            echo "Error: Python script failed. Aborting."
+            return 1
+        fi
+        # Update the timestamp file
+        date +%s > "$TIMESTAMP_FILE"
+    else
+        echo "Python script was run recently. Skipping update."
+    fi
+
+    # Call the original unison command
+    command unison "$@"
+}
+
 
 
