@@ -24,6 +24,7 @@ Plug 'mileszs/ack.vim'
 Plug 'preservim/nerdtree'
 Plug 'vim-scripts/nerdtree-ack'
 
+Plug 'dbakker/vim-projectroot'
 Plug 'tpope/vim-surround'
 Plug 'wesQ3/vim-windowswap'
 Plug 'whonore/Coqtail'
@@ -202,6 +203,7 @@ vnoremap gk :m '<-2<CR>gv=gv
 nnoremap LS :NERDTreeMirror<CR>:NERDTreeFocus<CR>
 nnoremap LCS :NERDTreeMirror<CR>:NERDTreeFind<CR>:NERDTreeFocus<CR>
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd BufEnter * call SetProjectRoot()
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -227,6 +229,13 @@ function! s:DiffWithSaved()
 endfunction
 com! Diff call s:DiffWithSaved()
 
+function! SetProjectRoot()
+  try
+    let b:workspace_folder = ProjectRootGuess()
+  catch
+    " Do nothing
+  endtry
+endfunction
 
 set number
 set relativenumber
@@ -273,9 +282,7 @@ if system('uname -r') =~ "microsoft"
   augroup END
 endif
 
-" LCD = Change to Directory of Current file
-command LCD lcd %:p:h
-
+command Rcd ProjectRootCD
 def g:Tapi_lcd(_, path: string)
     if isdirectory(path)
         execute 'silent lcd ' .. fnameescape(path)
