@@ -180,4 +180,12 @@ unison() {
 }
 
 
+kp-pass() {
+    pass keepassxc 2>/dev/null | keepassxc-cli show "$KEEPASSDB" "$1" | sed -n 's/Password: //p'
+}
+
+kp-ls() {
+    pass keepassxc 2>/dev/null | keepassxc-cli ls "$KEEPASSDB" "$1"
+}
+
 

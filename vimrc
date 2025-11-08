@@ -33,6 +33,8 @@ let g:textidote_lang = 'en'
 let g:textidote_dictionary = s:en_spellfile
 let g:textidote_ignore_macros = 'qw,quad,gate,ghost,Qcircuit,hfill'
 let g:textidote_replacements = s:en_replacefile
+vnoremap <silent> <Leader>te :'<,'>TeXtidoteToggle<CR>
+nnoremap <silent> <Leader>te :TeXtidoteToggle<CR>
 
 Plug 'github/copilot.vim'
 let g:copilot_filetypes = {
@@ -42,15 +44,16 @@ let g:copilot_filetypes = {
 
 
 Plug 'DanBradbury/copilot-chat.vim'
+let g:copilot_chat_create_on_add_selection = 1
+let g:copilot_reuse_active_chat = 1
+nnoremap <silent> <leader>cc :CopilotChatOpen<CR>:call SetCPChatOptions()<CR>i
+tnoremap <silent> <leader>cc <C-w>:CopilotChatOpen<CR>:call SetCPChatOptions()<CR>i
+vnoremap <leader>ca <Plug>CopilotChatAddSelection ki
 
 
 call plug#end()
 
-vnoremap <silent> <Leader>te :'<,'>TeXtidoteToggle<CR>
-nnoremap <silent> <Leader>te :TeXtidoteToggle<CR>
 
-nnoremap <leader>cc :CopilotChatOpen<CR>i
-tnoremap <leader>cc <C-w>:CopilotChatOpen<CR>i
 
 " May need to
 "   filetype off
@@ -97,6 +100,12 @@ function SetCppOptions()
     "- cindent overrides smartindent
     set cindent
     set cinoptions=(:N0,g0,0,u0,U0,w1
+endfunction
+
+function SetCPChatOptions()
+    set nospell
+    set nosmartindent
+    inoremap <CR> <C-o>:CopilotChatSubmit<CR>
 endfunction
 
 function SetMostOptions()
@@ -225,6 +234,7 @@ augroup ExtensionSpec
     autocmd FileType c,cpp,h,hpp,py,java call SetMostOptions()
     autocmd FileType c,cpp,h,hpp call SetCppOptions()
     autocmd FileType tex call SetLatexOptions()
+    autocmd FileType copilot_chat call SetCPChatOptions()
 augroup END
 
 au BufRead *.c1 set ft=
