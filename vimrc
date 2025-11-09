@@ -45,10 +45,8 @@ let g:copilot_filetypes = {
 \ }
 
 
-
 Plug 'DanBradbury/copilot-chat.vim'
 let g:copilot_chat_create_on_add_selection = 1
-let g:copilot_reuse_active_chat = 1
 nnoremap <silent> <leader>cc :CopilotChatOpen<CR>:call SetCPChatOptions()<CR>i
 tnoremap <silent> <leader>cc <C-w>:CopilotChatOpen<CR>:call SetCPChatOptions()<CR>i
 vnoremap <leader>ca <Plug>CopilotChatAddSelection ki
@@ -282,7 +280,11 @@ if system('uname -r') =~ "microsoft"
   augroup END
 endif
 
-command Rcd ProjectRootCD
+" LCD = Change to Directory of Current file
+command LCD lcd %:p:h
+" RCD = Change to Directory of Current project
+command RCD ProjectRootCD
+
 def g:Tapi_lcd(_, path: string)
     if isdirectory(path)
         execute 'silent lcd ' .. fnameescape(path)
@@ -319,4 +321,129 @@ set tags=./tags;$HOME
 
 "U
 let $PATH .= ':/usr/local/texlive/2025/bin/x86_64-linux'
+
+" Copilot chat -> quickfix
+function! s:make_prompt(fname, ft, content) abort
+  return join([
+        \ 'You are to analyze the following file and return ONLY a valid JSON array.',
+        \ 'Each element must be an object: { "filename": "<string>", "lnum": <integer>, "col": <integer, optional>, "text": "<string>" }',
+        \ 'Include an item for each grammar, spelling, and style suggestion. Be concise.',
+        \ 'DO NOT output any explanatory text, markdown, or code fences — ONLY the JSON array.',
+        \ printf('Filetype: %s, Filename: %s', a:ft, a:fname),
+        \ '',
+        \ 'File contents begin:',
+        \ a:content,
+        \ 'File contents end.'
+        \ ], "\n")
+endfunction
+
+
+
+function! ExtractJSON(bufnr, start_line, end_line) abort
+  " gather tail lines excluding the separator
+  let l:lines = getbufline(a:bufnr, a:start_line, a:end_line - 2)
+  let l:raw = join(l:lines, "\n")
+
+  " decode JSON array
+  try
+    let l:items = json_decode(l:raw)
+  catch
+    throw 'Failed to decode JSON: ' . v:exception
+  endtry
+
+  if type(l:items) != type([])
+    throw 'Decoded JSON is not an array'
+  endif
+
+  return l:items
+endfunction
+
+let s:__wait_state = {}
+
+function! s:__wait_for_buffer_fill(tid) abort
+  try
+    let state = s:__wait_state[a:tid]
+  catch
+    return
+  endtry
+  let l:end_line = line('$', win_findbuf(state.bufnr)[0])
+  if l:end_line > state.start_line
+    call timer_stop(a:tid)
+    call remove(s:__wait_state, a:tid)
+    call ApplyJsonToQuickfix(ExtractJSON(state.bufnr, state.start_line, l:end_line), state.orig_win, state.bufnr)
+    return
+  endif
+  if reltimefloat(reltime(state.start_time)) * 1000.0 >= state.timeout
+    call timer_stop(a:tid)
+    call remove(s:__wait_state, a:tid)
+    throw '__wait_for_buffer_fill: timeout'
+  endif
+endfunction
+
+function! CopilotChatQuickfix() abort
+  " save context
+  let l:orig_buf = bufnr('%')
+  let l:orig_win = win_findbuf(l:orig_buf)
+  let l:fname = expand('%:p')
+  if l:fname ==# '' | let l:fname = 'buffer' | endif
+  let l:ft = &filetype
+  if l:ft ==# '' | let l:ft = 'text' | endif
+  let l:content = join(getline(1, '$'), "\n")
+  let l:prompt = s:make_prompt(l:fname, l:ft, l:content)
+
+  " open Copilot chat
+  CopilotChatOpen
+  let l:input_buf = bufnr('%')
+  call append(line('$'), split(l:prompt, "\n"))
+  normal! G
+  let l:start_line = line('$') + 2
+  CopilotChatSubmit
+  " return to original buffer
+  call win_gotoid(l:orig_win[0])
+  let state = {
+        \ 'bufnr': l:input_buf,
+        \ 'orig_win' : l:orig_win[0],
+        \ 'start_line': l:start_line,
+        \ 'start_time': reltime(),
+        \ 'timeout': 30000
+        \ }
+  let tid = timer_start(200, 's:__wait_for_buffer_fill', {'repeat': -1})
+  let s:__wait_state[tid] = state
+endfunction
+
+function! ApplyJsonToQuickfix(json_items, orig_win, input_buf) abort
+  " Optional basic validation/normalization (ensure required keys and numeric lnum/col)
+  for idx in range(len(a:json_items))
+    let item = a:json_items[idx]
+    if type(item) != type({})
+      throw 'Quickfix item ' . idx . ' is not an object'
+    endif
+    if !has_key(item, 'filename') && !has_key(item, 'bufnr')
+      throw 'Quickfix item ' . idx . ' missing filename or bufnr'
+    endif
+    if has_key(item, 'lnum')
+      let item.lnum = str2nr(item.lnum)
+      if item.lnum < 1 | let item.lnum = 1 | endif
+    else
+      let item.lnum = 1
+    endif
+    if has_key(item, 'col')
+      let item.col = str2nr(item.col)
+      if item.col < 1 | let item.col = 1 | endif
+    endif
+    if !has_key(item, 'text')
+      let item.text = ''
+    endif
+    let a:json_items[idx] = item
+  endfor
+
+  " Set quickfix and open
+  execute 'silent! bd! ' . a:input_buf
+  call win_gotoid(a:orig_win)
+  LCD
+  windo call setqflist(a:json_items, 'r')
+  botright copen
+endfunction
+
+command! CPReview call CopilotChatQuickfix()
 
