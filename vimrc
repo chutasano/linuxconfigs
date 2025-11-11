@@ -47,8 +47,8 @@ let g:copilot_filetypes = {
 
 Plug 'DanBradbury/copilot-chat.vim'
 let g:copilot_chat_create_on_add_selection = 1
-nnoremap <silent> <leader>cc :CopilotChatOpen<CR>:call SetCPChatOptions()<CR>i
-tnoremap <silent> <leader>cc <C-w>:CopilotChatOpen<CR>:call SetCPChatOptions()<CR>i
+nnoremap <silent> <leader>cc :CopilotChatOpen<CR>i
+tnoremap <silent> <leader>cc <C-w>:CopilotChatOpen<CR>i
 vnoremap <leader>ca <Plug>CopilotChatAddSelection ki
 
 
@@ -104,9 +104,9 @@ function SetCppOptions()
 endfunction
 
 function SetCPChatOptions()
-    set nospell
-    set nosmartindent
-    inoremap <CR> <C-o>:CopilotChatSubmit<CR>
+    "- set nospell
+    "- set nosmartindent
+    "- inoremap <CR> <C-o>:CopilotChatSubmit<CR>
 endfunction
 
 function SetMostOptions()
@@ -399,7 +399,6 @@ function! CopilotChatQuickfix() abort
   let l:start_line = line('$') + 2
   CopilotChatSubmit
   " return to original buffer
-  call win_gotoid(l:orig_win[0])
   let state = {
         \ 'bufnr': l:input_buf,
         \ 'orig_win' : l:orig_win[0],
