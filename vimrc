@@ -404,7 +404,7 @@ function! CopilotChatQuickfix() abort
         \ 'orig_win' : l:orig_win[0],
         \ 'start_line': l:start_line,
         \ 'start_time': reltime(),
-        \ 'timeout': 120000
+        \ 'timeout': 600000
         \ }
   let tid = timer_start(200, 's:__wait_for_buffer_fill', {'repeat': -1})
   let s:__wait_state[tid] = state
