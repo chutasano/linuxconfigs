@@ -51,6 +51,8 @@ nnoremap <silent> <leader>cc :CopilotChatOpen<CR>i
 tnoremap <silent> <leader>cc <C-w>:CopilotChatOpen<CR>i
 vnoremap <leader>ca <Plug>CopilotChatAddSelection ki
 
+Plug 'tommcdo/vim-exchange'
+
 
 call plug#end()
 
@@ -446,3 +448,5 @@ endfunction
 
 command! CPReview call CopilotChatQuickfix()
 
+let $BASH_ENV = "~/.bashrc"
+set shell=bash\ --login
