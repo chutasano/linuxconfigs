@@ -1,6 +1,11 @@
 let s:en_spellfile = expand("~/linuxconfigs/en.utf-8.add")
 let s:en_replacefile = expand("~/linuxconfigs/textidote_replacements.txt")
 
+try
+    source ~/linuxconfigs/svimrc
+catch
+endtry
+
 call plug#begin('~/.vim/vplugindir')
 
 " Plug 'ycm-core/YouCompleteMe', { 'do': 'python3 install.py' }
@@ -75,10 +80,6 @@ function SetCC0Options()
     set syntax off
 endfunction
 
-try
-    source ~/linuxconfigs/svimrc
-catch
-endtry
 
 "-xml folding
 augroup XML
@@ -278,7 +279,7 @@ nmap <silent> <leader>pw :call DoWindowSwap()<CR>
 if system('uname -r') =~ "microsoft"
   augroup WinClipboard
   autocmd!
-  autocmd TextYankPost * if v:event["regname"] == 'w' | :call system('/mnt/c/windows/system32/clip.exe ',@") | endif
+  autocmd TextYankPost * if v:event["regname"] == 'w' | :call system('/mnt/c/windows/system32/clip.exe',@") | endif
   augroup END
 endif
 
@@ -450,3 +451,21 @@ command! CPReview call CopilotChatQuickfix()
 
 let $BASH_ENV = "~/.bashrc"
 set shell=bash\ --login
+
+" 日本語
+let g:jp = 0
+function! ToggleJapanese()
+  if g:jp
+    set spelllang=en
+    " TODO (in case I want to maintain jp spell file) execute "set spellfile=" . s:en_spellfile
+    let g:jp = 0
+  else
+    set spelllang=ja
+    let g:jp = 1
+  endif
+endfunction
+nnoremap <silent> <F3> ToggleJapanese()
+
+let s:ahk_toggle_ime = expand("~/linuxconfigs/set-jp-ime.ahk")
+
+
