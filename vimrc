@@ -113,18 +113,7 @@ function SetCPChatOptions()
 endfunction
 
 function SetMostOptions()
-    "-auto closing for most languages (not <> because << and >> )
-    inoremap () ()<Left>
-    inoremap {} {<Enter>}<Esc>k$i<Right>
-    inoremap "" ""<Left>
-    inoremap '' ''<Left>
-    inoremap [] []<Left>
 
-
-    "-wrap selection in quotes, parenthesis, or {} brackets w/ indent
-    vnoremap ( <ESC>`>a)<ESC>`<i(<ESC>
-    vnoremap " <ESC>`>a"<ESC>`<i"<ESC>
-    vnoremap { <ESC>`>a<Enter>}<ESC>`<i{<Enter><ESC>`<=i{
 endfunction
 
 
@@ -453,19 +442,47 @@ let $BASH_ENV = "~/.bashrc"
 set shell=bash\ --login
 
 " 日本語
-let g:jp = 0
 function! ToggleJapanese()
-  if g:jp
+  if !exists('b:jp')
+    let b:jp = 0
+  endif
+  if b:jp == 1
     set spelllang=en
     " TODO (in case I want to maintain jp spell file) execute "set spellfile=" . s:en_spellfile
-    let g:jp = 0
+    let b:jp = 0
+    echo "Lang: EN"
   else
     set spelllang=ja
-    let g:jp = 1
+    let b:jp = 1
+    echo "Lang: JP"
   endif
 endfunction
-nnoremap <silent> <F3> ToggleJapanese()
+
+nnoremap <silent> <F3> :call ToggleJapanese()<CR>
 
 let s:ahk_toggle_ime = expand("~/linuxconfigs/set-jp-ime.ahk")
+let s:ahk_exe = "/mnt/c/Program\ Files/AutoHotkey/v2/AutoHotkey64.exe"
 
+function SetIME(active)
+  if !exists('b:jp')
+    let b:jp = 0
+  endif
+  if b:jp == 1
+    if a:active == 1
+      call system('"' . s:ahk_exe . '" ' . s:ahk_toggle_ime . ' on')
+      return
+    else
+      call system('"' . s:ahk_exe . '" ' . s:ahk_toggle_ime . ' off')
+      return
+    endif
+  else
+    return
+  endif
+endfunction
+
+augroup JP
+    autocmd!
+    autocmd InsertEnter * call SetIME(1)
+    autocmd InsertLeavePre * call SetIME(0)
+augroup END
 
