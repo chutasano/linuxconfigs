@@ -439,7 +439,6 @@ endfunction
 command! CPReview call CopilotChatQuickfix()
 
 let $BASH_ENV = "~/.bashrc"
-set shell=bash\ --login
 
 " 日本語
 function! ToggleJapanese()
