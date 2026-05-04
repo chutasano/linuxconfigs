@@ -77,6 +77,9 @@ if [[ -n "$VIM_TERMINAL" ]]; then
     function lvim() {
         printf '\033]51;["call", "Tapi_lvim", "%q"]\007' "$1"
     }
+    function :q() {
+        printf '\033]51;["call", "Tapi_q"]\007'
+    }
 fi
 
 # colored GCC warnings and errors
