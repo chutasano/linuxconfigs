@@ -34,6 +34,15 @@ Plug 'tpope/vim-surround'
 Plug 'wesQ3/vim-windowswap'
 Plug 'whonore/Coqtail'
 
+Plug 'vds2212/vim-remotions'
+let g:remotions_motions = {
+\ 'diff' : { 'backward' : '[c', 'forward' : ']c'},
+\ 'quickfix' : { 'backward' : '[q', 'forward' : ']q'},
+\ }
+
+
+Plug 'chrisbra/Recover.vim'
+
 Plug 'PatrBal/vim-textidote'
 let g:textidote_jar = '/opt/textidote/textidote.jar'
 let g:textidote_win_height = 10
